@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="" th:href="@{/static/static.css/mystyle.css}"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    </body>
+    <title>Data Dummy</title>
+   
+</head>
+<body>
+    <h2>Daftar Data Dummy</h2>
+
+<hr />
+<div class="container">
+    <div>
+        <right>
+            <a href="/create" class="btn">Tambah Data</a>
+        </right>
+        
+    </div>
+    <br />
+    <br />
+    <br>
+    <br>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tanggal</th>
+                <th>Foto</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody th:each="data, index: ${data}">
+        <td th:text="${index.count}" th:id="${data.id}"></td>
+        <td th:text="${#dates.format(data.tanggal, 'dd-MM-yyyy')}"></td>
+        <td>
+            <img th:src="@{${'/img?id='+ data.id}}" alt="poto" width="200">
+        </td>
+        <td>
+            <a class="btn btn-secondary" th:href="@{/edit/{id}(id=${data.id})}">Edit</a>
+            <a class="btn btn-danger" href="#" th:onclick="|hapusData('${data.id}')|">Delete</a>
+            </tbody>
+    </table>
+</div>
+<script>
+    const hapusData = val => {
+        if (confirm(`Yakin ingin menghapus data ${val}?`)) {
+            location.href = `/delete/${val}`;
+        }
+    }
+</script>
+</body>
+</html>
