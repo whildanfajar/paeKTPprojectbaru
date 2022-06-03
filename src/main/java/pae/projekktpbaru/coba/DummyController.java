@@ -81,14 +81,6 @@ public class DummyController {
     return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
     
-    @GetMapping("/delete{id}")
-    @ResponseBody
-    public String deleteDummy(@PathVariable("id") int id, HttpServletResponse res) throws Exception {
-        dummyController.destroy(id);
-        res.sendRedirect("/read");
-        return "deleted";
-    }
-    
     @RequestMapping("/edit/{id}")
     public String updateDummy(@PathVariable("id") int id, Model m) throws Exception {
         Dummy dumdata = dummyController.findDummy(id);
@@ -98,19 +90,27 @@ public class DummyController {
     
     @PostMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
-    public String updateDummyData(@RequestParam("gambar") MultipartFile f, HttpServletRequest r, HttpServletResponse res)
+    public String updateDummy(@RequestParam("gambar") MultipartFile file, HttpServletRequest data, HttpServletResponse respon)
       throws ParseException, Exception {
     Dummy dumdata = new Dummy();
 
-    int id = Integer.parseInt(r.getParameter("id"));
-    Date date = new SimpleDateFormat("yyyy-MM-dd").parse(r.getParameter("tglahir"));
-    byte[] image = f.getBytes();
+    int id = Integer.parseInt(data.getParameter("id"));
+    Date date = new SimpleDateFormat("yyyy-MM-dd").parse(data.getParameter("tanggal"));
+    byte[] image = file.getBytes();
     dumdata.setId(id);
     dumdata.setTanggal(date);
     dumdata.setGambar(image);
 
     dummyController.edit(dumdata);
-    res.sendRedirect("/read");
+    respon.sendRedirect("/read");
     return "updated";
   }
+    
+    @GetMapping("/delete/{id}")
+    @ResponseBody
+    public String deleteDummy(@PathVariable("id") int id, HttpServletResponse respon) throws Exception {
+        dummyController.destroy(id);
+        respon.sendRedirect("/read");
+        return "deleted";
+    }
 }

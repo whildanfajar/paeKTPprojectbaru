@@ -12,13 +12,14 @@
    
 </head>
 <body>
-    <h2>Daftar Data Dummy</h2>
+    <h2>Data Dummy</h2>
 
 <hr />
 <div class="container">
     <div>
         <right>
             <a href="/create" class="btn">Tambah Data</a>
+            <a href="/data" class="btn">Back</a>
         </right>
         
     </div>
@@ -43,7 +44,7 @@
         </td>
         <td>
             <a class="btn btn-secondary" th:href="@{/edit/{id}(id=${data.id})}">Edit</a>
-            <a class="btn btn-danger" href="#" th:onclick="|hapusData('${data.id}')|">Delete</a>
+            <a class="btn btn-danger" href="#" th:onclick="|hapusData('${data.id}')|">Hapus</a>
             </tbody>
     </table>
 </div>
